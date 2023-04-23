@@ -3,6 +3,36 @@ from django.db.models.deletion import SET_NULL
 from django.contrib.auth.models import User
 
 # Create your models here.
+class Language(models.Model):
+    LANGUAGE_CHOICES = [
+    ("EN", "English"),
+    ("ES", "Spanish"),
+    ("FR", "French"),
+    ("DE", "German"),
+    ("IT", "Italian"),
+    ("PT", "Portuguese"),
+    ("RU", "Russian"),
+    ("ZH", "Chinese"),
+    ("JA", "Japanese"),
+    ("KO", "Korean"),
+    ("AR", "Arabic"),
+    ("HI", "Hindi"),
+    ("BN", "Bengali"),
+    ("UR", "Urdu"),
+    ("FA", "Persian"),
+]
+    lang = models.CharField(max_length =15, choices = LANGUAGE_CHOICES  )
+    
+
+    class Meta:
+        verbose_name = ("Language")
+        verbose_name_plural = ("Languages")
+
+    def __str__(self):
+        return self.lang
+
+    # def get_absolute_url(self):
+    #     return reverse("Language_detail", kwargs={"pk": self.pk})
 
 class typeofPod(models.Model):
     TYPE_CHOICES = [
@@ -48,8 +78,10 @@ class podcastDetails(models.Model):
     likes = models.IntegerField('Likes',null=True,blank=True)
     poddata = models.FileField(upload_to="Podcast Data")
     genre = models.ForeignKey(Genre,on_delete=SET_NULL, null=True)
+    Land = models.ForeignKey(Language,on_delete=SET_NULL, null=True)
     typeofPodcast = models.ForeignKey(typeofPod,on_delete=SET_NULL, null=True)
     dateuploaded = models.DateTimeField("Date Uploaded", auto_now_add=True)
+    Views = models.IntegerField('Views',default= 0,null= True)
 
     def __str__(self):
         return self.podname

@@ -32,10 +32,9 @@ class allpodcastAPIView(APIView):
         # permission_classes = [IsAuthenticatedOrReadOnly]
         serializer = PodcastSerializer(data = request.data)
         if serializer.is_valid():
-                if self.is_member(request.user):
-                    
-                    serializer.save()
-                    return Response(serializer.data,status = status.HTTP_201_CREATED)
+                # if self.is_member(request.user):
+                serializer.save()
+                return Response(serializer.data,status = status.HTTP_201_CREATED)
         return Response(serializer.errors,status = status.HTTP_400_BAD_REQUEST)
     
 class eachPodcastDetail(APIView):
@@ -57,9 +56,9 @@ class eachPodcastDetail(APIView):
         article  = self.get_object(id)
         serializer = PodcastSerializer(article,data = request.data)
         if serializer.is_valid():
-            if self.is_member(request.user):
-                serializer.save()
-                return Response(serializer.data)
+            # if self.is_member(request.user):
+            serializer.save()
+            return Response(serializer.data)
         return Response(serializer.errors,status = status.HTTP_400_BAD_REQUEST)
 
     # def delete(self,request,id):
@@ -71,22 +70,9 @@ class eachPodcastDetail(APIView):
     #             return Response(status = status.HTTP_204_NO_CONTENT)
     #     return Response(serializer.errors,status = status.HTTP_400_BAD_REQUEST)
 
-# class PodcastSearchView(APIView):
-#     def get(self, request, query):
-#         podcast = podcastDetails.objects.filter(title__icontains=query)
-#         results = []
-#         for data in podcast:
-#             results.append({
-#                 'id': data.id,
-#                 'title': data.podname,
-#                 'desc': data.poddesc,
-#                 'creator': data.podcreator,
-#                 'date': data.dateuploaded
-#             })
-#         return Response({'results': results})
 
 class PodcastSearchView(generics.ListCreateAPIView):
-    search_fields = ['podname',]
+    search_fields = ['podname','podcreator','Views','Land','genre']
     filter_backends = (filters.SearchFilter,)
     queryset = podcastDetails.objects.all()
     serializer_class = PodcastSerializer
