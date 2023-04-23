@@ -4,7 +4,16 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+class typeofPod(models.Model):
+    TYPE_CHOICES = [
+        ("AUDIO","audio"),
+        ("VIDEO","video"),
+    ]
+    
+    type = models.CharField(max_length = 10 ,choices = TYPE_CHOICES, default = "AUDIO")
 
+    def __str__(self):
+        return self.type
 
 
 class Genre(models.Model):
@@ -33,10 +42,24 @@ class Genre(models.Model):
 
 class podcastDetails(models.Model):
     podname = models.CharField('Podcast Name',max_length=20)
+    poddesc = models.CharField('Podcast Description',max_length=100)
     podcreator = models.ForeignKey(User,on_delete=SET_NULL,null=True)
     liked = models.BooleanField(default=False)
+    likes = models.IntegerField('Likes',null=True,blank=True)
     poddata = models.FileField(upload_to="Podcast Data")
     genre = models.ForeignKey(Genre,on_delete=SET_NULL, null=True)
+    typeofPodcast = models.ForeignKey(typeofPod,on_delete=SET_NULL, null=True)
+    dateuploaded = models.DateTimeField("Date Uploaded", auto_now_add=True)
 
     def __str__(self):
         return self.podname
+    
+class playlist(models.Model):
+
+    myplaylist = models.CharField("Playlist Name", max_length=15)
+    addpod =  models.ForeignKey(podcastDetails,on_delete=SET_NULL, null=True)
+
+    def __str__(self):
+        return self.myplaylist
+
+    

@@ -50,3 +50,13 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.save()
 
         return user
+    
+class UserSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(source='profile.name')
+    email = serializers.EmailField(source='profile.email')
+    bio = serializers.CharField(source='profile.bio')
+    profile_picture = serializers.ImageField(source='profile.profile_picture')
+
+    class Meta:
+        model = User
+        fields = ('username', 'name', 'email', 'bio', 'profile_picture')
