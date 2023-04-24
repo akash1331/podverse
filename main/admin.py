@@ -10,9 +10,9 @@ from .models import *
 # class GenreAdminSite(admin.ModelAdmin):
 #     list_display = ('genrepod')
 
-admin.site.register(Genre)
+# admin.site.register(Genre)
 admin.site.register(podcastDetails)
-admin.site.register(typeofPod)
+# admin.site.register(typeofPod)
 admin.site.register(playlist)
-admin.site.register(Language)
+# admin.site.register(Language)
 admin.site.site_header = 'Podverse Backend'

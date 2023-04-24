@@ -72,7 +72,17 @@ class eachPodcastDetail(APIView):
 
 
 class PodcastSearchView(generics.ListCreateAPIView):
-    search_fields = ['podname','podcreator','Views','Land','genre']
+    search_fields = ['podname','Views','lang']
     filter_backends = (filters.SearchFilter,)
     queryset = podcastDetails.objects.all()
     serializer_class = PodcastSerializer
+
+
+class UserPodcastSearchView(generics.ListAPIView):
+    serializer_class = PodcastSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['podname', 'poddesc', 'podcreator__username','lang','type']
+
+    def get_queryset(self):
+        user = self.request.user
+        return podcastDetails.objects.filter(podcreator__username=user)

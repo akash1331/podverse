@@ -21,4 +21,5 @@ urlpatterns = [
     path('podcasts/', allpodcastAPIView.as_view(), name='podcasts'),
     path('eachpodcast/<str:id>',eachPodcastDetail.as_view()),
     path('podcast/', PodcastSearchView.as_view(), name='song_search'),
+    path('search/', UserPodcastSearchView.as_view(), name='user-podcast-search'),
 ]
